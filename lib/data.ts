@@ -88,6 +88,7 @@ export const YT_HERO_ID = "WaSreKSwPrw";
 export type Playlist = { id: string; label: string };
 export const PLAYLISTS: Playlist[] = [
   { id: "PLN5Go0LQnrbo3WBNlZeEdj9KH3yBLJnYS", label: "PBR Projects" },
+  { id: "PLN5Go0LQnrboNBRlTwlUOdWX_CdqSvmHN", label: "NASCAR Race Hub Projects" },
 ];
 
 export const CONTACT = {
