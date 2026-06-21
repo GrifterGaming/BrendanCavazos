@@ -2,6 +2,7 @@
 
 import { useSite } from "../SiteProvider";
 import { useReveal } from "@/lib/useReveal";
+import RevealText from "../RevealText";
 import Button from "../ui/Button";
 
 export default function Testimonials() {
@@ -14,7 +15,7 @@ export default function Testimonials() {
       <div ref={ref} className="max-w-[1200px] mx-auto">
         <div style={{ marginBottom: 72 }}>
           <p className="reveal font-ui uppercase" style={{ fontSize: 10, fontWeight: 500, letterSpacing: 4, color: "var(--accent)", marginBottom: 16 }}>What Clients Say</p>
-          <h2 className="reveal font-display uppercase" style={{ fontSize: "clamp(64px,8vw,104px)", color: "var(--bc-text)", lineHeight: 0.87 }}>TESTIMONIALS</h2>
+          <RevealText className="font-display uppercase" style={{ fontSize: "clamp(64px,8vw,104px)", color: "var(--bc-text)", lineHeight: 0.87 }}>TESTIMONIALS</RevealText>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: 3 }}>

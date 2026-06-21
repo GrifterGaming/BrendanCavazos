@@ -7,6 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { useSite } from "../SiteProvider";
 import { useReveal } from "@/lib/useReveal";
+import RevealText from "../RevealText";
 import Button from "../ui/Button";
 import { TIMELINE } from "@/lib/data";
 
@@ -16,20 +17,35 @@ export default function About() {
   const photoWrap = useRef<HTMLDivElement>(null);
   const ctaVariant = darkMode ? "canvas" : "primary";
 
-  // Subtle parallax on the portrait as it scrolls.
+  // Subtle parallax on the portrait + a clip-wipe reveal as it scrolls in.
+  // Gated to "no reduced motion" so it stays still for those who prefer that.
   useGSAP(
     () => {
       const img = photoWrap.current?.querySelector("img");
       if (!img) return;
-      gsap.fromTo(
-        img,
-        { yPercent: -6 },
-        {
-          yPercent: 6,
-          ease: "none",
-          scrollTrigger: { trigger: photoWrap.current, start: "top bottom", end: "bottom top", scrub: true },
-        }
-      );
+      const mm = gsap.matchMedia();
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        gsap.fromTo(
+          img,
+          { yPercent: -6 },
+          {
+            yPercent: 6,
+            ease: "none",
+            scrollTrigger: { trigger: photoWrap.current, start: "top bottom", end: "bottom top", scrub: true },
+          }
+        );
+        gsap.fromTo(
+          photoWrap.current,
+          { clipPath: "inset(0% 0% 100% 0%)" },
+          {
+            clipPath: "inset(0% 0% 0% 0%)",
+            duration: 1.1,
+            ease: "power3.out",
+            scrollTrigger: { trigger: photoWrap.current, start: "top 85%" },
+          }
+        );
+      });
+      return () => mm.revert();
     },
     { scope: photoWrap }
   );
@@ -38,7 +54,7 @@ export default function About() {
     <div style={{ background: "var(--bc-bg)", minHeight: "100vh", padding: "88px 24px 96px", transition: "background 0.3s" }}>
       <div ref={ref} className="max-w-[1200px] mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 items-start" style={{ gap: 80 }}>
-          <div ref={photoWrap} className="reveal overflow-hidden" style={{ aspectRatio: "3 / 4", position: "relative" }}>
+          <div ref={photoWrap} className="overflow-hidden" style={{ aspectRatio: "3 / 4", position: "relative" }}>
             <Image
               src="/uploads/photo-1781897384209.webp"
               alt="Brendan Cavazos"
@@ -51,7 +67,7 @@ export default function About() {
 
           <div style={{ paddingTop: 16 }}>
             <p className="reveal font-ui uppercase" style={{ fontSize: 10, fontWeight: 500, letterSpacing: 4, color: "var(--accent)", marginBottom: 16 }}>The Editor</p>
-            <h2 className="reveal font-display uppercase" style={{ fontSize: "clamp(52px,6vw,84px)", color: "var(--bc-text)", lineHeight: 0.87, marginBottom: 32 }}>BRENDAN<br />CAVAZOS</h2>
+            <RevealText className="font-display uppercase" style={{ fontSize: "clamp(52px,6vw,84px)", color: "var(--bc-text)", lineHeight: 0.87 }} wrapperStyle={{ marginBottom: 32 }}>BRENDAN<br />CAVAZOS</RevealText>
             <p className="reveal font-ui" style={{ fontSize: 16, color: "var(--bc-text2)", lineHeight: 1.8, marginBottom: 20 }}>
               Originally from Charlotte, NC, my career has been fueled by a love for sports and a degree in Communications from ECU. My journey in editing really took off at Fox Sports, where I worked as a Production Assistant for the iconic NASCAR Race Hub.
             </p>

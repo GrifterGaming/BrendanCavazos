@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useSite } from "../SiteProvider";
 import { useReveal } from "@/lib/useReveal";
+import RevealText from "../RevealText";
 import Button from "../ui/Button";
 import { CONTACT } from "@/lib/data";
 
@@ -48,7 +49,7 @@ export default function Contact() {
     <div style={{ background: "var(--bc-bg)", minHeight: "100vh", padding: "88px 24px 96px", transition: "background 0.3s" }}>
       <div ref={ref} className="max-w-[900px] mx-auto">
         <p className="reveal font-ui uppercase" style={{ fontSize: 10, fontWeight: 500, letterSpacing: 4, color: "var(--accent)", marginBottom: 16 }}>Let&apos;s Work</p>
-        <h2 className="reveal font-display uppercase" style={{ fontSize: "clamp(64px,8vw,104px)", color: "var(--bc-text)", lineHeight: 0.87, marginBottom: 52 }}>GET IN<br />TOUCH</h2>
+        <RevealText className="font-display uppercase" style={{ fontSize: "clamp(64px,8vw,104px)", color: "var(--bc-text)", lineHeight: 0.87 }} wrapperStyle={{ marginBottom: 52 }}>GET IN<br />TOUCH</RevealText>
 
         <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: 2, marginBottom: 56 }}>
           <div className="reveal" style={{ background: "var(--bc-surface)", padding: "32px 36px", transition: "background 0.3s" }}>

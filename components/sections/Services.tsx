@@ -2,6 +2,7 @@
 
 import { useSite } from "../SiteProvider";
 import { useReveal } from "@/lib/useReveal";
+import RevealText from "../RevealText";
 import Button from "../ui/Button";
 import { PROCESS, SERVICES } from "@/lib/data";
 
@@ -14,7 +15,7 @@ export default function Services() {
     <div style={{ background: "var(--bc-bg)", minHeight: "100vh", padding: "88px 24px 96px", transition: "background 0.3s" }}>
       <div ref={ref} className="max-w-[1200px] mx-auto">
         <p className="reveal font-ui uppercase" style={{ fontSize: 10, fontWeight: 500, letterSpacing: 4, color: "var(--accent)", marginBottom: 16 }}>What I Do</p>
-        <h2 className="reveal font-display uppercase" style={{ fontSize: "clamp(64px,8vw,104px)", color: "var(--bc-text)", lineHeight: 0.87, marginBottom: 64 }}>SERVICES</h2>
+        <RevealText className="font-display uppercase" style={{ fontSize: "clamp(64px,8vw,104px)", color: "var(--bc-text)", lineHeight: 0.87 }} wrapperStyle={{ marginBottom: 64 }}>SERVICES</RevealText>
 
         {/* Service cards */}
         <div className="grid grid-cols-1 md:grid-cols-3" style={{ gap: 2, marginBottom: 2 }}>

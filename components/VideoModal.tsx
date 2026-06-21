@@ -2,17 +2,23 @@
 
 import { useEffect } from "react";
 import { useSite } from "./SiteProvider";
+import { getLenis } from "./SmoothScroll";
 
 export default function VideoModal() {
   const { activeVideo, closeVideo } = useSite();
 
   useEffect(() => {
     if (!activeVideo) return;
+    // Freeze background scroll while the video is open.
+    getLenis()?.stop();
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") closeVideo();
     };
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      getLenis()?.start();
+    };
   }, [activeVideo, closeVideo]);
 
   if (!activeVideo) return null;

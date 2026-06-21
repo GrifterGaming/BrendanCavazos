@@ -36,7 +36,7 @@ export default function Button({
       onClick={onClick}
       className={`bc-btn ${variantClass[variant]} ${sizeClass[size]} ${className}`}
     >
-      {children}
+      <span className="bc-btn__label">{children}</span>
     </button>
   );
 }

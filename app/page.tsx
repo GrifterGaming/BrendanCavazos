@@ -8,6 +8,7 @@ import LoadingScreen from "@/components/LoadingScreen";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import VideoModal from "@/components/VideoModal";
+import SmoothScroll from "@/components/SmoothScroll";
 import Home from "@/components/sections/Home";
 import Services from "@/components/sections/Services";
 import Work from "@/components/sections/Work";
@@ -53,6 +54,7 @@ function Shell() {
 
   return (
     <>
+      <SmoothScroll />
       <Nav />
       <div style={{ opacity: transitioning ? 0 : 1, transition: "opacity 0.24s ease" }}>
         <div ref={wrap} key={page}>

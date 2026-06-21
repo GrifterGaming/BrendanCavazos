@@ -9,6 +9,14 @@ import {
   useState,
 } from "react";
 import { DEFAULT_TESTIMONIALS, Testimonial } from "@/lib/data";
+import { getLenis } from "./SmoothScroll";
+
+// Reset to the top of the page on view changes, using Lenis when it's active.
+function scrollTop() {
+  const lenis = getLenis();
+  if (lenis) lenis.scrollTo(0, { immediate: true });
+  else window.scrollTo(0, 0);
+}
 
 export type PageId =
   | "home"
@@ -63,7 +71,7 @@ export function SiteProvider({ children }: { children: React.ReactNode }) {
   const navigate = useCallback(
     (next: PageId) => {
       if (next === page) {
-        window.scrollTo(0, 0);
+        scrollTop();
         return;
       }
       setTransitioning(true);
@@ -71,7 +79,7 @@ export function SiteProvider({ children }: { children: React.ReactNode }) {
       transitionTimer.current = setTimeout(() => {
         setPage(next);
         setTransitioning(false);
-        window.scrollTo(0, 0);
+        scrollTop();
       }, 240);
     },
     [page]
