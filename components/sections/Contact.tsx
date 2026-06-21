@@ -52,11 +52,11 @@ export default function Contact() {
         <RevealText className="font-display uppercase" style={{ fontSize: "clamp(64px,8vw,104px)", color: "var(--bc-text)", lineHeight: 0.87 }} wrapperStyle={{ marginBottom: 52 }}>GET IN<br />TOUCH</RevealText>
 
         <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: 2, marginBottom: 56 }}>
-          <div className="reveal" style={{ background: "var(--bc-surface)", padding: "32px 36px", transition: "background 0.3s" }}>
+          <div className="reveal bc-card" style={{ background: "var(--bc-surface)", padding: "32px 36px", transition: "background 0.3s" }}>
             <p className="font-ui uppercase" style={{ fontSize: 10, fontWeight: 500, letterSpacing: 3, color: "var(--accent)", marginBottom: 12 }}>Email</p>
             <a href={`mailto:${CONTACT.email}`} className="font-ui" style={{ fontSize: 16, fontWeight: 500, color: "var(--bc-text)", textDecoration: "none", wordBreak: "break-word" }}>{CONTACT.email}</a>
           </div>
-          <div className="reveal" style={{ background: "var(--bc-surface)", padding: "32px 36px", transition: "background 0.3s" }}>
+          <div className="reveal bc-card" style={{ background: "var(--bc-surface)", padding: "32px 36px", transition: "background 0.3s" }}>
             <p className="font-ui uppercase" style={{ fontSize: 10, fontWeight: 500, letterSpacing: 3, color: "var(--accent)", marginBottom: 12 }}>Phone</p>
             <a href={`tel:${CONTACT.phoneHref}`} className="font-ui" style={{ fontSize: 16, fontWeight: 500, color: "var(--bc-text)", textDecoration: "none" }}>{CONTACT.phone}</a>
           </div>

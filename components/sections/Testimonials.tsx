@@ -20,7 +20,7 @@ export default function Testimonials() {
 
         <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: 3 }}>
           {testimonials.map((t) => (
-            <div key={t.id} className="reveal flex flex-col" style={{ background: "var(--bc-surface)", padding: "56px 48px", gap: 32, transition: "background 0.3s" }}>
+            <div key={t.id} className="reveal bc-card flex flex-col" style={{ background: "var(--bc-surface)", padding: "56px 48px", gap: 32, transition: "background 0.3s" }}>
               <div style={{ width: 28, height: 2, background: "var(--accent)" }} />
               <p className="font-ui italic" style={{ fontSize: 18, color: "var(--bc-text)", lineHeight: 1.72, flex: 1 }}>&ldquo;{t.quote}&rdquo;</p>
               <div>

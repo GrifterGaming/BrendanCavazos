@@ -16,6 +16,24 @@ export function getLenis() {
   return lenis;
 }
 
+// Scroll subscription that works whether Lenis is ready or not yet.
+// Handlers registered before Lenis mounts are queued and flushed on init.
+type ScrollData = { scroll: number; velocity: number; direction: number };
+const pendingScrollListeners: ((data: ScrollData) => void)[] = [];
+
+export function subscribeToLenisScroll(handler: (data: ScrollData) => void): () => void {
+  if (lenis) {
+    lenis.on("scroll", handler);
+    return () => lenis!.off("scroll", handler);
+  }
+  pendingScrollListeners.push(handler);
+  return () => {
+    const i = pendingScrollListeners.indexOf(handler);
+    if (i > -1) pendingScrollListeners.splice(i, 1);
+    lenis?.off("scroll", handler);
+  };
+}
+
 /**
  * Buttery momentum scrolling, synced to GSAP's ticker so every ScrollTrigger
  * animation stays in lockstep. Skipped entirely when the visitor asked for
@@ -27,6 +45,10 @@ export default function SmoothScroll() {
     if (reduce) return;
 
     lenis = new Lenis({ duration: 1.1, smoothWheel: true });
+
+    // Flush any handlers that subscribed before Lenis was ready.
+    pendingScrollListeners.forEach((h) => lenis!.on("scroll", h));
+    pendingScrollListeners.length = 0;
 
     lenis.on("scroll", ScrollTrigger.update);
 

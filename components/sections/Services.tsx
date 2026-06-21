@@ -20,7 +20,7 @@ export default function Services() {
         {/* Service cards */}
         <div className="grid grid-cols-1 md:grid-cols-3" style={{ gap: 2, marginBottom: 2 }}>
           {SERVICES.map((s) => (
-            <div key={s.n} className="reveal flex flex-col" style={{ background: "var(--bc-surface)", padding: "56px 44px", transition: "background 0.3s" }}>
+            <div key={s.n} className="reveal bc-card flex flex-col" style={{ background: "var(--bc-surface)", padding: "56px 44px", transition: "background 0.3s" }}>
               <div style={{ width: 28, height: 2, background: "var(--accent)", marginBottom: 36 }} />
               <p className="font-ui uppercase" style={{ fontSize: 10, fontWeight: 600, letterSpacing: 3, color: "var(--accent)", marginBottom: 18 }}>{s.n}</p>
               <h3 className="font-display uppercase" style={{ fontSize: 52, color: "var(--bc-text)", lineHeight: 0.93, marginBottom: 24 }}>
@@ -38,7 +38,7 @@ export default function Services() {
           <h3 className="reveal font-display uppercase" style={{ fontSize: 64, color: "var(--bc-text)", lineHeight: 0.9, marginBottom: 48 }}>HOW IT WORKS</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4" style={{ gap: 2 }}>
             {PROCESS.map((p) => (
-              <div key={p.n} className="reveal" style={{ background: "var(--bc-surface)", padding: "36px 32px", transition: "background 0.3s" }}>
+              <div key={p.n} className="reveal bc-card" style={{ background: "var(--bc-surface)", padding: "36px 32px", transition: "background 0.3s" }}>
                 <p className="font-display" style={{ fontSize: 56, color: "rgba(196,18,48,0.15)", lineHeight: 1, marginBottom: 16 }}>{p.n}</p>
                 <p className="font-ui uppercase" style={{ fontSize: 11, fontWeight: 500, color: "var(--bc-text)", letterSpacing: 2, marginBottom: 10 }}>{p.title}</p>
                 <p className="font-ui" style={{ fontSize: 13, color: "var(--bc-text3)", lineHeight: 1.7 }}>{p.body}</p>

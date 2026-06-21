@@ -59,16 +59,14 @@ export default function Home() {
               <button
                 key={s.n}
                 onClick={() => navigate("services")}
-                className="reveal group w-full flex items-center justify-between bg-transparent border-none cursor-pointer text-left"
-                style={{ padding: "28px 0", borderBottom: "1px solid var(--bc-border)", transition: "opacity 0.15s" }}
-                onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.55")}
-                onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+                className="reveal bc-service-row w-full flex items-center justify-between bg-transparent border-none cursor-pointer text-left"
+                style={{ padding: "28px 0", borderBottom: "1px solid var(--bc-border)" }}
               >
                 <span className="flex items-baseline gap-6">
                   <span className="font-ui" style={{ fontSize: 11, fontWeight: 600, color: "var(--accent)", letterSpacing: 2, minWidth: 24 }}>{s.n}</span>
                   <span className="font-display uppercase" style={{ fontSize: "clamp(28px,3.5vw,52px)", color: "var(--bc-text)", lineHeight: 1 }}>{s.flatTitle}</span>
                 </span>
-                <span className="font-ui" style={{ fontSize: 18, color: "var(--bc-text3)" }}>→</span>
+                <span className="font-ui bc-service-arrow" style={{ fontSize: 18, color: "var(--bc-text3)" }}>→</span>
               </button>
             ))}
           </div>

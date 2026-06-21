@@ -293,6 +293,47 @@ html.lenis body {
   will-change: transform, opacity;
 }
 
+/* Card lift — applied to service, testimonial, and contact tiles */
+.bc-card {
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+.bc-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.32);
+}
+[data-light] .bc-card:hover {
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.10);
+}
+
+/* Service list row hover — arrow slides right, accent left bar fades in */
+.bc-service-row {
+  position: relative;
+  padding-left: 20px !important;
+}
+.bc-service-row::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2px;
+  height: 60%;
+  background: var(--accent);
+  opacity: 0;
+  transition: opacity 0.2s ease, height 0.2s ease;
+}
+.bc-service-row:hover::before {
+  opacity: 1;
+  height: 80%;
+}
+.bc-service-row .bc-service-arrow {
+  transition: transform 0.2s ease;
+  display: inline-block;
+}
+.bc-service-row:hover .bc-service-arrow {
+  transform: translateX(6px);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .reveal {
     opacity: 1 !important;
