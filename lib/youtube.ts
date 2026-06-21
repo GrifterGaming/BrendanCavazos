@@ -27,6 +27,36 @@ export function sumDurations(videos: VideoItem[]): string {
   return `${m}:${String(s).padStart(2, "0")}`;
 }
 
+// Cheap hub summary — one small call, no duration fetching. Returns the playlist's
+// total item count and a representative thumbnail for the bin card.
+export async function fetchPlaylistSummary(
+  playlistId: string,
+  key: string
+): Promise<{ count: number; thumb: string }> {
+  const res = await fetch(
+    `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=5&playlistId=${playlistId}&key=${key}`
+  );
+  const data = await res.json();
+  if (data.error) throw new Error(data.error.message || "YouTube API error");
+
+  const count = data.pageInfo?.totalResults ?? (data.items || []).length;
+
+  // First non-deleted item gives the card its thumbnail.
+  let thumb = "";
+  for (const v of data.items || []) {
+    const snap = v.snippet || {};
+    if (snap.title === "Deleted video" || snap.title === "Private video") continue;
+    const id = (snap.resourceId || {}).videoId || "";
+    const t = snap.thumbnails || {};
+    thumb =
+      (t.maxres || t.high || t.medium || t.default || {}).url ||
+      (id ? `https://img.youtube.com/vi/${id}/hqdefault.jpg` : "");
+    if (thumb) break;
+  }
+
+  return { count, thumb };
+}
+
 export async function fetchPlaylistVideos(
   playlistId: string,
   key: string
