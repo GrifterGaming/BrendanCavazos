@@ -56,7 +56,7 @@ export default function About() {
         <div className="grid grid-cols-1 md:grid-cols-2 items-start" style={{ gap: 80 }}>
           <div ref={photoWrap} className="overflow-hidden" style={{ aspectRatio: "3 / 4", position: "relative" }}>
             <Image
-              src="/uploads/brendan-about.webp"
+              src="/uploads/photo-1781897384209.webp"
               alt="Brendan Cavazos"
               fill
               priority
