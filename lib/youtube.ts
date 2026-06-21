@@ -1,7 +1,31 @@
-// Talks to the YouTube Data API. Runs on the server only, so the API key never
-// reaches the browser. One job: given a playlist, return its videos.
+export type VideoItem = { id: string; title: string; thumb: string; duration: string };
 
-export type VideoItem = { id: string; title: string; thumb: string };
+// Parse ISO 8601 duration (PT4M12S) into a readable string (4:12)
+function parseDuration(iso: string): string {
+  const m = iso.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
+  if (!m) return "";
+  const h = parseInt(m[1] || "0");
+  const min = parseInt(m[2] || "0");
+  const sec = parseInt(m[3] || "0");
+  const mm = String(min).padStart(h > 0 ? 2 : 1, "0");
+  const ss = String(sec).padStart(2, "0");
+  return h > 0 ? `${h}:${mm}:${ss}` : `${mm}:${ss}`;
+}
+
+// Sum all video durations into a single readable string (e.g. "1:23:45")
+export function sumDurations(videos: VideoItem[]): string {
+  let total = 0;
+  for (const v of videos) {
+    const parts = v.duration.split(":").map(Number);
+    if (parts.length === 3) total += parts[0] * 3600 + parts[1] * 60 + parts[2];
+    else if (parts.length === 2) total += parts[0] * 60 + parts[1];
+  }
+  const h = Math.floor(total / 3600);
+  const m = Math.floor((total % 3600) / 60);
+  const s = total % 60;
+  if (h > 0) return `${h}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+  return `${m}:${String(s).padStart(2, "0")}`;
+}
 
 export async function fetchPlaylistVideos(
   playlistId: string,
@@ -10,8 +34,6 @@ export async function fetchPlaylistVideos(
   const videos: VideoItem[] = [];
   let pageToken = "";
 
-  // YouTube returns at most 50 items per call, so page through until done
-  // (capped at 5 pages / 250 videos so one huge playlist can't hang the request).
   for (let page = 0; page < 5; page++) {
     const url =
       `https://www.googleapis.com/youtube/v3/playlistItems` +
@@ -21,26 +43,36 @@ export async function fetchPlaylistVideos(
 
     const res = await fetch(url);
     const data = await res.json();
-
-    if (data.error) {
-      throw new Error(data.error.message || "YouTube API error");
-    }
+    if (data.error) throw new Error(data.error.message || "YouTube API error");
 
     for (const v of data.items || []) {
       const snap = v.snippet || {};
       const id = (snap.resourceId || {}).videoId || "";
       if (!id) continue;
-      // Skip deleted/private videos (YouTube keeps them in the list as placeholders).
       if (snap.title === "Deleted video" || snap.title === "Private video") continue;
       const t = snap.thumbnails || {};
       const thumb =
         (t.maxres || t.high || t.medium || t.default || {}).url ||
         `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
-      videos.push({ id, title: snap.title || "", thumb });
+      videos.push({ id, title: snap.title || "", thumb, duration: "" });
     }
 
     pageToken = data.nextPageToken || "";
     if (!pageToken) break;
+  }
+
+  // Batch-fetch durations (YouTube allows up to 50 IDs per request)
+  const ids = videos.map((v) => v.id);
+  for (let i = 0; i < ids.length; i += 50) {
+    const chunk = ids.slice(i, i + 50).join(",");
+    const res = await fetch(
+      `https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=${chunk}&key=${key}`
+    );
+    const data = await res.json();
+    for (const item of data.items || []) {
+      const video = videos.find((v) => v.id === item.id);
+      if (video) video.duration = parseDuration(item.contentDetails?.duration || "");
+    }
   }
 
   return videos;

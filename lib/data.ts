@@ -84,11 +84,12 @@ export const MARQUEE_SERVICES = [
 // Hero reel video id
 export const YT_HERO_ID = "WaSreKSwPrw";
 
-// Work page playlists — add a new line here to add a new playlist to the site
-export type Playlist = { id: string; label: string };
+// Work page playlists — add a new line here to add a new playlist to the site.
+// tint: optional dark gradient for the bin card background.
+export type Playlist = { id: string; label: string; tint?: string };
 export const PLAYLISTS: Playlist[] = [
-  { id: "PLN5Go0LQnrbo3WBNlZeEdj9KH3yBLJnYS", label: "PBR Projects" },
-  { id: "PLN5Go0LQnrboNBRlTwlUOdWX_CdqSvmHN", label: "NASCAR Race Hub Projects" },
+  { id: "PLN5Go0LQnrbo3WBNlZeEdj9KH3yBLJnYS", label: "PBR Projects", tint: "linear-gradient(135deg, #3a1f1f 0%, #0a0a0a 70%)" },
+  { id: "PLN5Go0LQnrboNBRlTwlUOdWX_CdqSvmHN", label: "NASCAR Race Hub Projects", tint: "linear-gradient(135deg, #1f2a3a 0%, #0a0a0a 70%)" },
 ];
 
 export const CONTACT = {
