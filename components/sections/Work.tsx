@@ -180,7 +180,7 @@ export default function Work() {
           <div className="max-w-[1100px] mx-auto" style={{ padding: "0 24px 48px" }}>
             <p className="font-ui uppercase" style={{ fontSize: 10, fontWeight: 500, letterSpacing: 4, color: "var(--accent)", marginBottom: 14 }}>Work Archive</p>
             <RevealText className="font-display uppercase" style={{ fontSize: "clamp(64px,8vw,104px)", color: "var(--bc-text)", lineHeight: 0.87 }} wrapperStyle={{ marginBottom: 16 }}>
-              SELECT A BIN
+              PROJECT HUB
             </RevealText>
             {!loading && configured && (
               <p className="font-ui uppercase" style={{ fontSize: 11, color: "var(--bc-text3)", letterSpacing: 2 }}>
