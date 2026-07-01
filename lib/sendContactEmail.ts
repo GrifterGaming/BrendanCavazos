@@ -18,6 +18,9 @@ export async function sendContactEmail(payload: ContactPayload): Promise<void> {
 
   const resend = new Resend(apiKey);
 
+  // Strip header-breaking characters before using the visitor's name in email headers.
+  const safeName = payload.name.replace(/[\r\n<>"]/g, "").trim();
+
   const projectTypesLine = payload.projectTypes?.length
     ? `Interested In: ${payload.projectTypes.join(", ")}\n`
     : "";
@@ -25,11 +28,11 @@ export async function sendContactEmail(payload: ContactPayload): Promise<void> {
 
   const subject =
     "Portfolio Inquiry from " +
-    payload.name +
+    safeName +
     (payload.projectTypes?.length ? ` — ${payload.projectTypes.join(", ")}` : "");
 
   const { error } = await resend.emails.send({
-    from: "Portfolio Contact Form <bc@brendancavazos.com>",
+    from: `${safeName} (via Portfolio Site) <bc@brendancavazos.com>`,
     to: toEmail,
     replyTo: payload.email,
     subject,
