@@ -29,7 +29,7 @@ export async function sendContactEmail(payload: ContactPayload): Promise<void> {
     (payload.projectTypes?.length ? ` — ${payload.projectTypes.join(", ")}` : "");
 
   const { error } = await resend.emails.send({
-    from: "Portfolio Contact Form <onboarding@resend.dev>",
+    from: "Portfolio Contact Form <bc@brendancavazos.com>",
     to: toEmail,
     replyTo: payload.email,
     subject,
