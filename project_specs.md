@@ -10,7 +10,7 @@ Rebuilt faithfully from the Claude Design file `Portfolio.dc.html`, with GSAP an
 - **Styling:** Tailwind CSS + a ported design-token CSS layer (CSS variables for dark/light themes)
 - **Animation:** GSAP + ScrollTrigger (via `@gsap/react` `useGSAP`)
 - **Hosting target:** Vercel
-- **No backend / no database.** Everything is client-side. No Supabase needed for this build.
+- **No database.** One serverless API route (`/api/contact`) sends contact-form emails via Resend — everything else remains client-side. No Supabase needed for this build.
 
 ## Pages / user flows (single-page, client-side view switcher — matches the design)
 Top nav switches between in-page views (no full reload), exactly like the original:
@@ -19,7 +19,7 @@ Top nav switches between in-page views (no full reload), exactly like the origin
 - **Services** — 3 service cards, 4-step process, "ready to start" CTA
 - **About** — photo, bio, timeline, CTA
 - **Testimonials** — 2-col grid; inline edit mode (add/edit/remove, saved to localStorage)
-- **Contact** — email/phone cards + contact form (opens mailto)
+- **Contact** — contact form (sends via API + reCAPTCHA); no email/phone shown on the site
 All views are public. No authentication.
 
 ## Data models / storage
@@ -30,6 +30,8 @@ No server data. Browser `localStorage` only, mirroring the original:
 
 ## Third-party services
 - **YouTube** — hero reel embed + work playlist embed; optional YouTube Data API v3 (key supplied by the visitor, never committed)
+- **Resend** — transactional email for the contact form (server-side only; no submissions are stored, just sent and logged transiently to the server console)
+- **Google reCAPTCHA v2** — spam protection (checkbox) on the contact form
 - No Stripe, no Supabase, no auth.
 
 ## Brand / design system (from the imported design)
@@ -48,5 +50,5 @@ No server data. Browser `localStorage` only, mirroring the original:
 ## What "done" looks like
 - `npm run build` passes with no TypeScript/build errors
 - `npm run dev` runs with no console errors
-- All six views render and switch; theme toggle works and persists; hero switcher works; work playlist shows; testimonials edit + persist; contact form opens mailto; video modal opens/closes
+- All six views render and switch; theme toggle works and persists; hero switcher works; work playlist shows; testimonials edit + persist; contact form sends via the API route with reCAPTCHA; video modal opens/closes
 - Layout matches the design on desktop and is responsive on mobile

@@ -91,9 +91,3 @@ export const PLAYLISTS: Playlist[] = [
   { id: "PLN5Go0LQnrbo3WBNlZeEdj9KH3yBLJnYS", label: "PBR Projects", tint: "linear-gradient(135deg, #3a1f1f 0%, #0a0a0a 70%)" },
   { id: "PLN5Go0LQnrboNBRlTwlUOdWX_CdqSvmHN", label: "NASCAR Race Hub Projects", tint: "linear-gradient(135deg, #1f2a3a 0%, #0a0a0a 70%)" },
 ];
-
-export const CONTACT = {
-  email: "brendancavazos3@gmail.com",
-  phone: "(980) 875-0858",
-  phoneHref: "+19808750858",
-};

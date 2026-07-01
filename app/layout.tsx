@@ -72,8 +72,6 @@ const personSchema = {
   description:
     "Freelance sports and broadcast video editor based in Fort Worth, TX. Specializing in social media, long-form, and podcast editing.",
   url: SITE_URL,
-  email: "brendancavazos3@gmail.com",
-  telephone: "+19808750858",
   address: {
     "@type": "PostalAddress",
     addressLocality: "Fort Worth",

@@ -7,7 +7,7 @@ import { useSite } from "../SiteProvider";
 import Button from "../ui/Button";
 import { YT_HERO_ID } from "@/lib/data";
 
-const REEL_BG = `https://www.youtube.com/embed/${YT_HERO_ID}?autoplay=1&mute=1&loop=1&playlist=${YT_HERO_ID}&controls=0&showinfo=0&rel=0&playsinline=1&modestbranding=1`;
+const REEL_BG = `https://www.youtube-nocookie.com/embed/${YT_HERO_ID}?autoplay=1&mute=1&loop=1&playlist=${YT_HERO_ID}&controls=0&showinfo=0&rel=0&playsinline=1&modestbranding=1`;
 
 export default function Hero() {
   const { navigate } = useSite();

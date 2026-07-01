@@ -23,7 +23,7 @@ export default function VideoModal() {
 
   if (!activeVideo) return null;
 
-  const embed = `https://www.youtube.com/embed/${activeVideo.id}?autoplay=1&rel=0&modestbranding=1`;
+  const embed = `https://www.youtube-nocookie.com/embed/${activeVideo.id}?autoplay=1&rel=0&modestbranding=1`;
 
   return (
     <div
