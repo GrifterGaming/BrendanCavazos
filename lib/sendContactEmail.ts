@@ -26,10 +26,7 @@ export async function sendContactEmail(payload: ContactPayload): Promise<void> {
     : "";
   const phoneLine = payload.phone ? `Phone: ${payload.phone}\n` : "";
 
-  const subject =
-    "Portfolio Inquiry from " +
-    safeName +
-    (payload.projectTypes?.length ? ` — ${payload.projectTypes.join(", ")}` : "");
+  const subject = `Project Request from ${safeName}`;
 
   const { error } = await resend.emails.send({
     from: `${safeName} (via Portfolio Site) <bc@brendancavazos.com>`,
