@@ -6,6 +6,7 @@ import { useSite } from "../SiteProvider";
 import { useReveal } from "@/lib/useReveal";
 import RevealText from "../RevealText";
 import Button from "../ui/Button";
+import { SERVICES } from "@/lib/data";
 
 declare global {
   interface Window {
@@ -33,6 +34,19 @@ const labelStyle: React.CSSProperties = {
   textTransform: "uppercase",
 };
 
+const pillStyle = (active: boolean): React.CSSProperties => ({
+  background: active ? "var(--accent)" : "var(--bc-input-bg)",
+  border: `1px solid ${active ? "var(--accent)" : "var(--bc-input-bdr)"}`,
+  borderRadius: 30,
+  padding: "10px 20px",
+  color: active ? "#fff" : "var(--bc-text)",
+  fontFamily: "var(--font-ui)",
+  fontSize: 13,
+  fontWeight: 500,
+  cursor: "pointer",
+  transition: "background 0.2s, border-color 0.2s, color 0.2s",
+});
+
 type Status = "idle" | "sending" | "sent" | "error";
 
 export default function Contact() {
@@ -42,7 +56,9 @@ export default function Contact() {
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
+  const [projectTypes, setProjectTypes] = useState<string[]>([]);
   const [honeypot, setHoneypot] = useState("");
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const [status, setStatus] = useState<Status>("idle");
@@ -61,6 +77,12 @@ export default function Contact() {
         "expired-callback": () => setCaptchaToken(null),
       });
     });
+  };
+
+  const toggleProjectType = (label: string) => {
+    setProjectTypes((prev) =>
+      prev.includes(label) ? prev.filter((t) => t !== label) : [...prev, label]
+    );
   };
 
   const resetRecaptcha = () => {
@@ -86,7 +108,7 @@ export default function Contact() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, message, captchaToken, honeypot }),
+        body: JSON.stringify({ name, email, phone, message, projectTypes, captchaToken, honeypot }),
       });
       const data = await res.json();
 
@@ -121,7 +143,7 @@ export default function Contact() {
           </div>
         ) : (
           <form onSubmit={submit} className="reveal flex flex-col" style={{ gap: 16 }}>
-            <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: 16 }}>
+            <div className="grid grid-cols-1 sm:grid-cols-3" style={{ gap: 16 }}>
               <div className="flex flex-col" style={{ gap: 8 }}>
                 <label style={labelStyle}>Name</label>
                 <input type="text" required value={name} onChange={(e) => setName(e.target.value)} placeholder="Your name" style={inputStyle} />
@@ -130,9 +152,30 @@ export default function Contact() {
                 <label style={labelStyle}>Email</label>
                 <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="your@email.com" style={inputStyle} />
               </div>
+              <div className="flex flex-col" style={{ gap: 8 }}>
+                <label style={labelStyle}>Phone (Optional)</label>
+                <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="(000) 000-0000" style={inputStyle} />
+              </div>
             </div>
+
+            <div className="flex flex-col" style={{ gap: 10 }}>
+              <label style={labelStyle}>What Do You Need Help With? (Optional)</label>
+              <div className="flex flex-wrap" style={{ gap: 10 }}>
+                {SERVICES.map((s) => (
+                  <button
+                    key={s.flatTitle}
+                    type="button"
+                    onClick={() => toggleProjectType(s.flatTitle)}
+                    style={pillStyle(projectTypes.includes(s.flatTitle))}
+                  >
+                    {s.flatTitle}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             <div className="flex flex-col" style={{ gap: 8 }}>
-              <label style={labelStyle}>Message</label>
+              <label style={labelStyle}>About Your Project</label>
               <textarea required rows={6} value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Tell me about your project..." style={{ ...inputStyle, resize: "vertical", minHeight: 140 }} />
             </div>
 

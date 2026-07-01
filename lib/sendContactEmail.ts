@@ -3,7 +3,9 @@ import { Resend } from "resend";
 export type ContactPayload = {
   name: string;
   email: string;
+  phone?: string;
   message: string;
+  projectTypes?: string[];
 };
 
 export async function sendContactEmail(payload: ContactPayload): Promise<void> {
@@ -16,12 +18,22 @@ export async function sendContactEmail(payload: ContactPayload): Promise<void> {
 
   const resend = new Resend(apiKey);
 
+  const projectTypesLine = payload.projectTypes?.length
+    ? `Interested In: ${payload.projectTypes.join(", ")}\n`
+    : "";
+  const phoneLine = payload.phone ? `Phone: ${payload.phone}\n` : "";
+
+  const subject =
+    "Portfolio Inquiry from " +
+    payload.name +
+    (payload.projectTypes?.length ? ` — ${payload.projectTypes.join(", ")}` : "");
+
   const { error } = await resend.emails.send({
     from: "Portfolio Contact Form <onboarding@resend.dev>",
     to: toEmail,
     replyTo: payload.email,
-    subject: "Portfolio Inquiry from " + payload.name,
-    text: `Name: ${payload.name}\nEmail: ${payload.email}\n\nMessage:\n${payload.message}`,
+    subject,
+    text: `Name: ${payload.name}\nEmail: ${payload.email}\n${phoneLine}${projectTypesLine}\nMessage:\n${payload.message}`,
   });
 
   if (error) {

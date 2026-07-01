@@ -10,7 +10,7 @@ export async function POST(req: Request) {
   console.log("[api/contact] start");
 
   try {
-    const { name, email, message, captchaToken, honeypot } = await req.json();
+    const { name, email, phone, message, projectTypes, captchaToken, honeypot } = await req.json();
 
     // Bots that auto-fill every field land here — fake success, no email sent.
     if (honeypot) {
@@ -42,7 +42,12 @@ export async function POST(req: Request) {
       );
     }
 
-    await sendContactEmail({ name, email, message });
+    const safePhone = typeof phone === "string" ? phone.trim() : "";
+    const safeProjectTypes = Array.isArray(projectTypes)
+      ? projectTypes.filter((t): t is string => typeof t === "string" && t.length > 0)
+      : [];
+
+    await sendContactEmail({ name, email, phone: safePhone, message, projectTypes: safeProjectTypes });
 
     console.log("[api/contact] end — email sent");
     return NextResponse.json({ ok: true });
