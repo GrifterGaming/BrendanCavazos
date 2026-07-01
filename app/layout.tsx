@@ -38,14 +38,6 @@ export const metadata: Metadata = {
       "Freelance sports and broadcast video editor based in Fort Worth, TX. PBR · Fox Sports · Social Media · Long Form · Podcast.",
     url: SITE_URL,
     siteName: "Brendan Cavazos",
-    images: [
-      {
-        url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Brendan Cavazos — Sports & Broadcast Video Editor",
-      },
-    ],
     locale: "en_US",
     type: "website",
   },
@@ -54,7 +46,6 @@ export const metadata: Metadata = {
     title: "Brendan Cavazos | Sports & Broadcast Video Editor",
     description:
       "Freelance sports and broadcast video editor. PBR · Fox Sports · Social · Long Form · Podcast.",
-    images: ["/og-image.jpg"],
   },
 };
 
