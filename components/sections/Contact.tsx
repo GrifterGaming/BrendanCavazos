@@ -134,12 +134,12 @@ export default function Contact() {
         <RevealText className="font-display uppercase" style={{ fontSize: "clamp(64px,8vw,104px)", color: "var(--bc-text)", lineHeight: 0.87 }} wrapperStyle={{ marginBottom: 52 }}>GET IN<br />TOUCH</RevealText>
 
         {status === "sent" ? (
-          <div className="reveal text-center" style={{ background: "var(--bc-surface)", padding: 56, transition: "background 0.3s" }}>
+          <div className="text-center" style={{ background: "var(--bc-surface)", padding: 56, transition: "background 0.3s", animation: "fadeIn 0.4s ease" }}>
             <div className="flex items-center justify-center mx-auto" style={{ width: 52, height: 52, background: "var(--accent)", borderRadius: "50%", marginBottom: 22 }}>
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
             </div>
             <h3 className="font-display uppercase" style={{ fontSize: 48, color: "var(--bc-text)", marginBottom: 12 }}>Message Sent</h3>
-            <p className="font-ui" style={{ fontSize: 15, color: "var(--bc-text3)", lineHeight: 1.6 }}>I&apos;ll be in touch soon. Looking forward to working together.</p>
+            <p className="font-ui" style={{ fontSize: 15, color: "var(--bc-text3)", lineHeight: 1.6 }}>Thanks for your inquiry, {name}! I&apos;ll get back to you shortly to schedule a consultation.</p>
           </div>
         ) : (
           <form onSubmit={submit} className="reveal flex flex-col" style={{ gap: 16 }}>
